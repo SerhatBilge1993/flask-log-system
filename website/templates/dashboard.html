@@ -1,0 +1,51 @@
+
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<h3 class="text-center mt-4">Log Dashboard</h3>
+
+<hr>
+
+<h5>Logs by Level</h5>
+<canvas id="levelsChart" height="120"></canvas>
+
+<h5 class="mt-5">Logs per Day</h5>
+<canvas id="dayChart" height="120"></canvas>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+const levelLabels = {{ level_stats.keys()|list|tojson }};
+const levelData = {{ level_stats.values()|list|tojson }};
+
+new Chart(document.getElementById('levelsChart'), {
+  type: 'bar',
+  data: {
+    labels: levelLabels,
+    datasets: [{
+      label: 'Logs by Level',
+      data: levelData,
+      backgroundColor: ['#17a2b8','#ffc107','#dc3545','#dc3545','#28a745','#007bff','#6c757d']
+    }]
+  }
+});
+
+const dayLabels = {{ per_day.keys()|list|tojson }};
+const dayData = {{ per_day.values()|list|tojson }};
+
+new Chart(document.getElementById('dayChart'), {
+  type: 'line',
+  data: {
+    labels: dayLabels,
+    datasets: [{
+      label: 'Logs per Day',
+      data: dayData,
+      borderColor: '#007bff',
+      fill: false
+    }]
+  }
+});
+</script>
+
+{% endblock %}
