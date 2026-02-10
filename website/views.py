@@ -12,13 +12,13 @@ views = Blueprint('views', __name__)
 @login_required
 def home():
     if request.method == 'POST': 
-        note = request.form.get('note')#Gets the note from the HTML 
+        note = request.form.get('note')
 
         if len(note) < 1:
             flash('Note is too short!', category='error') 
         else:
-            new_note = Note(data=note, user_id=current_user.id)  #providing the schema for the note 
-            db.session.add(new_note) #adding the note to the database 
+            new_note = Note(data=note, user_id=current_user.id)  
+            db.session.add(new_note) 
             db.session.commit()
             log_event(current_user.get_id(), "Created note", "SUCCESS")
             flash('Note added!', category='success')
@@ -28,7 +28,7 @@ def home():
 
 @views.route('/delete-note', methods=['POST'])
 def delete_note():  
-    note = json.loads(request.data) # this function expects a JSON from the INDEX.js file 
+    note = json.loads(request.data)  
     noteId = note['noteId']
     note = Note.query.get(noteId)
     if note:
@@ -117,3 +117,48 @@ def dashboard():
         level_stats=level_stats,
         per_day=per_day
     )
+
+
+
+@views.route('/automation')
+@login_required
+def automation():
+    from .models import Log
+
+    logs = Log.query.filter_by(user_id=current_user.id).order_by(Log.time.desc()).all()
+    scripts = {}
+
+    for log in logs:
+        script_name = (log.action or "").split()[0] if log.action else "UNKNOWN"
+
+        if script_name not in scripts:
+            scripts[script_name] = {
+                "last_run": log.time,
+                "last_status": log.level,
+                "total_runs": 0,
+                "critical_count": 0,
+                "last_critical": None,
+                "recent": [],
+                "trend": {}
+            }
+
+        s = scripts[script_name]
+
+        if log.time > s["last_run"]:
+            s["last_run"] = log.time
+            s["last_status"] = log.level
+
+        s["total_runs"] += 1
+
+        if log.level == "CRITICAL":
+            s["critical_count"] += 1
+            if s["last_critical"] is None:
+                s["last_critical"] = log
+
+        if len(s["recent"]) < 5:
+            s["recent"].append(log)
+
+        d = log.time.strftime("%Y-%m-%d")
+        s["trend"][d] = s["trend"].get(d, 0) + 1
+
+    return render_template("automation.html", user=current_user, scripts=scripts)
