@@ -2,12 +2,40 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from os import path
 from flask_login import LoginManager
+from logging.config import dictConfig
+import logging
 
 db = SQLAlchemy()
 DB_NAME = "database.db"
 
 
 def create_app():
+    
+    dictConfig({
+        "version": 1,
+        "formatters": {
+            "default": {
+                "format": "[%(asctime)s] %(levelname)s in %(module)s: %(message)s"
+            }
+        },
+        "handlers": {
+            "console": {
+                "class": "logging.StreamHandler",
+                "level": "DEBUG",
+                "formatter": "default"
+            },
+            "file": {
+                "class": "logging.FileHandler",
+                "level": "INFO",
+                "formatter": "default",
+                "filename": "instance/app.log"
+            }
+        },
+        "root": {
+            "level": "DEBUG",
+            "handlers": ["console", "file"]
+        }
+    })
     app = Flask(__name__)
     app.config['SECRET_KEY'] = 'hjshjhdjah kjshkjdhjs'
     app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
@@ -40,11 +68,4 @@ def create_database(app):
         db.create_all(app=app)
         print('Created Database!')
 
-
-def log_event(user_id, action, level="INFO"):
-    level = (level or "INFO").upper()
-    from .models import Log
-    log = Log(user_id=user_id, action=action, level=level)
-    db.session.add(log)
-    db.session.commit()
 

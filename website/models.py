@@ -16,10 +16,3 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(150))
     first_name = db.Column(db.String(150))
     notes = db.relationship('Note')
-
-class Log(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer)
-    level = db.Column(db.String(20), default="INFO")
-    action = db.Column(db.String(255))
-    time = db.Column(db.DateTime(timezone=True), default=func.now())
