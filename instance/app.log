@@ -1,0 +1,22 @@
+[2026-02-10 20:42:12,919] INFO in _internal: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+[2026-02-10 20:42:12,919] INFO in _internal: [33mPress CTRL+C to quit[0m
+[2026-02-10 20:42:12,921] INFO in _internal:  * Restarting with stat
+[2026-02-10 20:42:13,600] WARNING in _internal:  * Debugger is active!
+[2026-02-10 20:42:13,603] INFO in _internal:  * Debugger PIN: 131-455-238
+[2026-02-10 20:42:20,560] INFO in _internal: 127.0.0.1 - - [10/Feb/2026 20:42:20] "[32mGET / HTTP/1.1[0m" 302 -
+[2026-02-10 20:42:20,606] INFO in _internal: 127.0.0.1 - - [10/Feb/2026 20:42:20] "GET /login?next=/ HTTP/1.1" 200 -
+[2026-02-10 20:42:20,891] INFO in _internal: 127.0.0.1 - - [10/Feb/2026 20:42:20] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+[2026-02-10 20:42:28,910] INFO in auth: User logged in: serhat@gmail.com
+[2026-02-10 20:42:28,911] INFO in _internal: 127.0.0.1 - - [10/Feb/2026 20:42:28] "[32mPOST /login?next=/ HTTP/1.1[0m" 302 -
+[2026-02-10 20:42:28,925] INFO in _internal: 127.0.0.1 - - [10/Feb/2026 20:42:28] "GET / HTTP/1.1" 200 -
+[2026-02-10 20:42:30,844] INFO in _internal: 127.0.0.1 - - [10/Feb/2026 20:42:30] "GET /logs HTTP/1.1" 200 -
+[2026-03-16 08:31:16,047] INFO in _internal: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+[2026-03-16 08:31:16,047] INFO in _internal: [33mPress CTRL+C to quit[0m
+[2026-03-16 08:31:16,049] INFO in _internal:  * Restarting with stat
+[2026-03-16 08:31:16,666] WARNING in _internal:  * Debugger is active!
+[2026-03-16 08:31:16,669] INFO in _internal:  * Debugger PIN: 131-455-238
+[2026-03-16 08:45:51,942] INFO in _internal: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+[2026-03-16 08:45:51,943] INFO in _internal: [33mPress CTRL+C to quit[0m
